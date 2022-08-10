@@ -6,7 +6,7 @@ terraform {
   required_version = ">= 1.0"
   required_providers {
     oci = {
-      source  = "hashicorp/oci"
+      source  = "oracle/oci"
       version = ">= 4.65.0"
       # https://registry.terraform.io/providers/hashicorp/oci/4.65.0
     }
@@ -56,6 +56,16 @@ provider "oci" {
   alias        = "current_region"
   tenancy_ocid = var.tenancy_ocid
   region       = var.region
+
+  user_ocid        = var.user_ocid
+  fingerprint      = var.fingerprint
+  private_key_path = var.private_key_path
+}
+
+provider "oci" {
+  alias        = "remote_region"
+  tenancy_ocid = var.tenancy_ocid
+  region       = var.remote_region
 
   user_ocid        = var.user_ocid
   fingerprint      = var.fingerprint

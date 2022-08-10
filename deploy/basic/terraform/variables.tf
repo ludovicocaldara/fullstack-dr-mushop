@@ -6,6 +6,8 @@ variable "tenancy_ocid" {}
 variable "region" {}
 variable "compartment_ocid" {}
 
+variable "remote_region" {}
+
 variable "user_ocid" {
   default = ""
 }
