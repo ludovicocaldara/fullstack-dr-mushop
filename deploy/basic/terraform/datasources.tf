@@ -159,6 +159,10 @@ locals {
     {
       catalogue_password = random_string.catalogue_db_password.result
   })
+  remote_mushop_media_pars_list = templatefile("${path.module}/scripts/mushop_media_pars_list.txt",
+    {
+      content = local.remote_mushop_media_pars
+  })
   mushop_media_pars_list = templatefile("${path.module}/scripts/mushop_media_pars_list.txt",
     {
       content = local.mushop_media_pars

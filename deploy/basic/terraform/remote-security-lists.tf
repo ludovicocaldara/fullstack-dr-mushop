@@ -65,7 +65,7 @@ resource "oci_core_security_list" "remote_mushop_security_list" {
 
   egress_security_rules {
     protocol         = local.all_protocols
-    destination      = lookup(data.oci_core_services.all_services.services[0], "cidr_block")
+    destination      = lookup(data.oci_core_services.remote_all_services.services[0], "cidr_block")
     destination_type = "SERVICE_CIDR_BLOCK"
   }
 }
