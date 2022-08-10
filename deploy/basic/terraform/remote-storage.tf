@@ -14,23 +14,23 @@ resource "oci_objectstorage_bucket" "remote_mushop" {
 
 
 ### UNCOMMENT THOSE TWO WHEN ATP CREATED
-#resource "oci_objectstorage_object" "remote_mushop_wallet" {
-#  provider = oci.remote_region
-#  bucket    = oci_objectstorage_bucket.remote_mushop.name
-#  content   = oci_database_autonomous_database_wallet.remote_autonomous_database_wallet.content
-#  namespace = data.oci_objectstorage_namespace.remote_user_namespace.namespace
-#  object    = "mushop_atp_wallet"
-#}
+resource "oci_objectstorage_object" "remote_mushop_wallet" {
+  provider = oci.remote_region
+  bucket    = oci_objectstorage_bucket.remote_mushop.name
+  content   = oci_database_autonomous_database_wallet.autonomous_database_wallet.content
+  namespace = data.oci_objectstorage_namespace.remote_user_namespace.namespace
+  object    = "mushop_atp_wallet"
+}
 
-#resource "oci_objectstorage_preauthrequest" "remote_mushop_wallet_preauth" {
-#  provider = oci.remote_region
-#  access_type  = "ObjectRead"
-#  bucket       = oci_objectstorage_bucket.remote_mushop.name
-#  name         = "mushop_wallet_preauth"
-#  namespace    = data.oci_objectstorage_namespace.remote_user_namespace.namespace
-#  time_expires = timeadd(timestamp(), "30m")
-#  object_name  = oci_objectstorage_object.remote_mushop_wallet.object
-#}
+resource "oci_objectstorage_preauthrequest" "remote_mushop_wallet_preauth" {
+  provider = oci.remote_region
+  access_type  = "ObjectRead"
+  bucket       = oci_objectstorage_bucket.remote_mushop.name
+  name         = "mushop_wallet_preauth"
+  namespace    = data.oci_objectstorage_namespace.remote_user_namespace.namespace
+  time_expires = timeadd(timestamp(), "30m")
+  object_name  = oci_objectstorage_object.remote_mushop_wallet.object
+}
 
 resource "oci_objectstorage_object" "remote_mushop_basic" {
   provider = oci.remote_region

@@ -15,18 +15,5 @@ resource "oci_objectstorage_object_lifecycle_policy" "remote_mushop_deploy_asset
     time_amount = "1"
     time_unit   = "DAYS"
   }
-  ## REVERT BACK WHEN ATP ADDED
-  # depends_on = [oci_identity_policy.mushop_basic_policies, oci_objectstorage_object.remote_mushop_wallet]
-  depends_on = [oci_identity_policy.mushop_basic_policies]
+  depends_on = [oci_identity_policy.mushop_basic_policies, oci_objectstorage_object.remote_mushop_wallet]
 }
-
-## Create policies for MuShop based on the features
-#resource "oci_identity_policy" "remote_mushop_basic_policies" {
-#  name           = "mushop-basic-policies-${random_string.deploy_id.result}"
-#  description    = "Policies created by terraform for MuShop Basic"
-#  compartment_id = var.compartment_ocid
-#  statements     = local.mushop_basic_policies_statement
-#  freeform_tags  = local.common_tags
-#
-#  provider = oci.home_region
-#}
