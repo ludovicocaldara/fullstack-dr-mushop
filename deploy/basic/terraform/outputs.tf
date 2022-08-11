@@ -13,7 +13,7 @@ output "lb_nip_host_url" {
 }
 output "autonomous_database_password" {
   value     = random_string.autonomous_database_admin_password.result
-  sensitive = true
+  sensitive = false
 }
 output "dev" {
   value = "Made with \u2764 by Oracle Developers"
