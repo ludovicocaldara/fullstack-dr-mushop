@@ -3,9 +3,10 @@
 # 
 
 ## Gets a list of Availability Domains
-#data "oci_identity_availability_domains" "remote_ADs" {
-#  compartment_id = var.tenancy_ocid
-#}
+data "oci_identity_availability_domains" "remote_ADs" {
+  provider = oci.remote_region
+  compartment_id = var.tenancy_ocid
+}
 #
 ## Gets ObjectStorage namespace
 data "oci_objectstorage_namespace" "remote_user_namespace" {

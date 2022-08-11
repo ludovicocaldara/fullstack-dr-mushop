@@ -36,9 +36,9 @@ resource "oci_core_instance" "app_instance" {
     user_data           = data.cloudinit_config.nodes.rendered
   }
 
-#  lifecycle {
-#        ignore_changes = [user_data]
-#  }
+  lifecycle {
+        ignore_changes = all
+  }
 
   count = var.num_nodes
 }
