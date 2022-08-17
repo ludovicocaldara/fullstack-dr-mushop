@@ -24,7 +24,7 @@ output "comments" {
 }
 
 output "deploy_id" {
-  value = random_string.deploy_id.result
+  value = var.resId
 }
 
 output "deployed_to_region" {

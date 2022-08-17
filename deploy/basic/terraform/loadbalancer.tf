@@ -3,8 +3,8 @@
 # 
 
 resource "oci_load_balancer_load_balancer" "mushop_lb" {
-  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.compartment_ocid
-  display_name   = "mushop-${random_string.deploy_id.result}"
+  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.ociCompartmentOcid
+  display_name   = "mushop-${var.resId}"
   shape          = local.lb_shape
   subnet_ids     = [oci_core_subnet.mushop_lb_subnet.id]
   is_private     = "false"
@@ -20,7 +20,7 @@ resource "oci_load_balancer_load_balancer" "mushop_lb" {
 }
 
 resource "oci_load_balancer_backend_set" "mushop_bes" {
-  name             = "mushop-${random_string.deploy_id.result}"
+  name             = "mushop-${var.resId}"
   load_balancer_id = oci_load_balancer_load_balancer.mushop_lb.id
   policy           = "IP_HASH"
 
@@ -52,7 +52,7 @@ resource "oci_load_balancer_backend" "mushop-be" {
 resource "oci_load_balancer_listener" "mushop_listener_80" {
   load_balancer_id         = oci_load_balancer_load_balancer.mushop_lb.id
   default_backend_set_name = oci_load_balancer_backend_set.mushop_bes.name
-  name                     = "mushop-${random_string.deploy_id.result}-80"
+  name                     = "mushop-${var.resId}-80"
   port                     = 80
   protocol                 = "HTTP"
 
@@ -64,7 +64,7 @@ resource "oci_load_balancer_listener" "mushop_listener_80" {
 resource "oci_load_balancer_listener" "mushop_listener_443" {
   load_balancer_id         = oci_load_balancer_load_balancer.mushop_lb.id
   default_backend_set_name = oci_load_balancer_backend_set.mushop_bes.name
-  name                     = "mushop-${random_string.deploy_id.result}-443"
+  name                     = "mushop-${var.resId}-443"
   port                     = 443
   protocol                 = "HTTP"
 

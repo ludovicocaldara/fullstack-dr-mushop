@@ -3,8 +3,8 @@
 # 
 
 resource "oci_objectstorage_bucket" "mushop" {
-  compartment_id = var.compartment_ocid
-  name           = "mushop-${random_string.deploy_id.result}"
+  compartment_id = var.ociCompartmentOcid
+  name           = "mushop-${var.resId}"
   namespace      = data.oci_objectstorage_namespace.user_namespace.namespace
   freeform_tags  = local.common_tags
   kms_key_id     = var.use_encryption_from_oci_vault ? (var.create_new_encryption_key ? oci_kms_key.mushop_key[0].id : var.encryption_key_id) : null
@@ -58,8 +58,8 @@ resource "oci_objectstorage_preauthrequest" "mushop_media_pars_list_preauth" {
 
 # Static assets bucket
 resource "oci_objectstorage_bucket" "mushop_media" {
-  compartment_id = (var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.compartment_ocid
-  name           = "mushop-media-${random_string.deploy_id.result}"
+  compartment_id = (var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.ociCompartmentOcid
+  name           = "mushop-media-${var.resId}"
   namespace      = data.oci_objectstorage_namespace.user_namespace.namespace
   freeform_tags  = local.common_tags
   access_type    = (var.object_storage_mushop_media_visibility == "Private") ? "NoPublicAccess" : "ObjectReadWithoutList"

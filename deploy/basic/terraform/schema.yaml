@@ -16,8 +16,8 @@ groupings:
   - title: "Basic Hidden"
     visible: false
     variables:
-    - compartment_ocid
-    - tenancy_ocid
+    - ociCompartmentOcid
+    - ociTenancyOcid
     - region
 
   - title: "Optional Configuration"
@@ -77,7 +77,7 @@ groupings:
 
   - title: "Extras Hidden"
     variables:
-      - user_ocid
+      - ociUserOcid
       - fingerprint
       - private_key_path
       - autonomous_database_db_version
@@ -97,7 +97,7 @@ groupings:
     visible: false
 
 variables:
-  compartment_ocid:
+  ociCompartmentOcid:
     type: oci:identity:compartment:id
     required: true
     title: "Compartment"
@@ -222,7 +222,7 @@ variables:
     title: "Select a shape for the compute instances"
     description: "A shape is a template that determines the number of CPUs, amount of memory, and other resources allocated to a newly created instance."
     dependsOn:
-      compartmentId: compartment_ocid
+      compartmentId: ociCompartmentOcid
     required: true
     visible:
       not:
@@ -366,7 +366,7 @@ variables:
     type: oci:identity:compartment:id
     title: "Load Balancer Compartment"
     description: "The compartment in which to create the Public Load Balancer."
-    default: compartment_ocid
+    default: ociCompartmentOcid
     visible:
       and:
         - and:
@@ -439,7 +439,7 @@ variables:
     type: oci:identity:compartment:id
     title: "Object Storage (MuShop Media) Compartment"
     description: "The compartment in which to create the Public MuShop product images."
-    default: compartment_ocid
+    default: ociCompartmentOcid
     visible:
       and:
         - and:

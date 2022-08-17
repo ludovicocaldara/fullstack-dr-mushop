@@ -19,9 +19,9 @@ resource "oci_objectstorage_object_lifecycle_policy" "mushop_deploy_assets_lifec
 
 # Create policies for MuShop based on the features
 resource "oci_identity_policy" "mushop_basic_policies" {
-  name           = "mushop-basic-policies-${random_string.deploy_id.result}"
+  name           = "mushop-basic-policies-${var.resId}"
   description    = "Policies created by terraform for MuShop Basic"
-  compartment_id = var.compartment_ocid
+  compartment_id = var.ociCompartmentOcid
   statements     = local.mushop_basic_policies_statement
   freeform_tags  = local.common_tags
 
@@ -39,21 +39,21 @@ locals {
 }
 
 locals {
-  allow_object_storage_lifecycle_statement = ["Allow service objectstorage-${var.region} to manage object-family in compartment id ${var.compartment_ocid}"]
+  allow_object_storage_lifecycle_statement = ["Allow service objectstorage-${var.region} to manage object-family in compartment id ${var.ociCompartmentOcid}"]
   allow_object_storage_service_keys_statements = [
-    "Allow service blockstorage, objectstorage-${var.region} to use vaults in compartment id ${var.compartment_ocid}",
-    "Allow service blockstorage, objectstorage-${var.region} to use keys in compartment id ${var.compartment_ocid}"
+    "Allow service blockstorage, objectstorage-${var.region} to use vaults in compartment id ${var.ociCompartmentOcid}",
+    "Allow service blockstorage, objectstorage-${var.region} to use keys in compartment id ${var.ociCompartmentOcid}"
   ]
   allow_media_object_storage_service_keys_statements = [
-    "Allow service blockstorage, objectstorage-${var.region} to use vaults in compartment id ${(var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.compartment_ocid}",
-    "Allow service blockstorage, objectstorage-${var.region} to use keys in compartment id ${(var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.compartment_ocid}"
+    "Allow service blockstorage, objectstorage-${var.region} to use vaults in compartment id ${(var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.ociCompartmentOcid}",
+    "Allow service blockstorage, objectstorage-${var.region} to use keys in compartment id ${(var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.ociCompartmentOcid}"
   ]
   allow_group_manage_vault_keys_statements = [
-    "Allow group ${var.user_admin_group_for_vault_policy} to manage vaults in compartment id ${var.compartment_ocid}",
-    "Allow group ${var.user_admin_group_for_vault_policy} to manage keys in compartment id ${var.compartment_ocid}"
+    "Allow group ${var.user_admin_group_for_vault_policy} to manage vaults in compartment id ${var.ociCompartmentOcid}",
+    "Allow group ${var.user_admin_group_for_vault_policy} to manage keys in compartment id ${var.ociCompartmentOcid}"
   ]
   allow_group_manage_local_peering_statements = [
-    "Allow group ${var.user_admin_group_for_vault_policy} to manage local-peering-gateways in compartment id ${var.compartment_ocid}",
-    "Allow group ${var.user_admin_group_for_vault_policy} to manage local-peering-gateways in compartment id ${(var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.compartment_ocid}"
+    "Allow group ${var.user_admin_group_for_vault_policy} to manage local-peering-gateways in compartment id ${var.ociCompartmentOcid}",
+    "Allow group ${var.user_admin_group_for_vault_policy} to manage local-peering-gateways in compartment id ${(var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.ociCompartmentOcid}"
   ]
 }

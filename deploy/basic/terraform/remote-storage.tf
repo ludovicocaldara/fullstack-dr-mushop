@@ -4,8 +4,8 @@
 
 resource "oci_objectstorage_bucket" "remote_mushop" {
   provider = oci.remote_region
-  compartment_id = var.compartment_ocid
-  name           = "mushop-${random_string.deploy_id.result}"
+  compartment_id = var.ociCompartmentOcid
+  name           = "mushop-${var.resId}"
   namespace      = data.oci_objectstorage_namespace.remote_user_namespace.namespace
   freeform_tags  = local.common_tags
   kms_key_id     = null
@@ -69,8 +69,8 @@ resource "oci_objectstorage_preauthrequest" "remote_mushop_media_pars_list_preau
 # Static assets bucket
 resource "oci_objectstorage_bucket" "remote_mushop_media" {
   provider = oci.remote_region
-  compartment_id = (var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.compartment_ocid
-  name           = "mushop-media-${random_string.deploy_id.result}"
+  compartment_id = (var.object_storage_mushop_media_compartment_ocid != "") ? var.object_storage_mushop_media_compartment_ocid : var.ociCompartmentOcid
+  name           = "mushop-media-${var.resId}"
   namespace      = data.oci_objectstorage_namespace.remote_user_namespace.namespace
   freeform_tags  = local.common_tags
   access_type    = (var.object_storage_mushop_media_visibility == "Private") ? "NoPublicAccess" : "ObjectReadWithoutList"

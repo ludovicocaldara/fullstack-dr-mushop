@@ -3,9 +3,9 @@
 # 
 
 resource "oci_core_security_list" "mushop_security_list" {
-  compartment_id = var.compartment_ocid
+  compartment_id = var.ociCompartmentOcid
   vcn_id         = oci_core_virtual_network.mushop_main_vcn.id
-  display_name   = "mushop-main-${random_string.deploy_id.result}"
+  display_name   = "mushop-main-${var.resId}"
   freeform_tags  = local.common_tags
 
   dynamic "ingress_security_rules" {
@@ -70,9 +70,9 @@ resource "oci_core_security_list" "mushop_security_list" {
 }
 
 resource "oci_core_security_list" "mushop_lb_security_list" {
-  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.compartment_ocid
+  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.ociCompartmentOcid
   vcn_id         = var.create_secondary_vcn ? oci_core_virtual_network.mushop_lb_vcn[0].id : oci_core_virtual_network.mushop_main_vcn.id
-  display_name   = "mushop-lb-${random_string.deploy_id.result}"
+  display_name   = "mushop-lb-${var.resId}"
   freeform_tags  = local.common_tags
 
   dynamic "ingress_security_rules" {

@@ -2,13 +2,16 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 # 
 
-variable "tenancy_ocid" {}
+variable "ociTenancyOcid" {}
 variable "region" {}
-variable "compartment_ocid" {}
+variable "ociCompartmentOcid" {}
 
 variable "remote_region" {}
 
-variable "user_ocid" {
+variable "ociUserOcid" {
+  default = ""
+}
+variable "resId" {
   default = ""
 }
 variable "fingerprint" {

@@ -5,19 +5,19 @@
 ## Gets a list of Availability Domains
 data "oci_identity_availability_domains" "remote_ADs" {
   provider = oci.remote_region
-  compartment_id = var.tenancy_ocid
+  compartment_id = var.ociTenancyOcid
 }
 #
 ## Gets ObjectStorage namespace
 data "oci_objectstorage_namespace" "remote_user_namespace" {
   provider = oci.remote_region
-  compartment_id = var.compartment_ocid
+  compartment_id = var.ociCompartmentOcid
 }
 #
 ## Check for resource limits
 ### Check available compute shape
 #data "oci_limits_services" "remote_compute_services" {
-#  compartment_id = var.tenancy_ocid
+#  compartment_id = var.ociTenancyOcid
 #
 #  filter {
 #    name   = "name"
@@ -25,7 +25,7 @@ data "oci_objectstorage_namespace" "remote_user_namespace" {
 #  }
 #}
 #data "oci_limits_limit_definitions" "remote_compute_limit_definitions" {
-#  compartment_id = var.tenancy_ocid
+#  compartment_id = var.ociTenancyOcid
 #  service_name   = data.oci_limits_services.remote_compute_services.services.0.name
 #
 #  filter {
@@ -34,7 +34,7 @@ data "oci_objectstorage_namespace" "remote_user_namespace" {
 #  }
 #}
 #data "oci_limits_resource_availability" "remote_compute_resource_availability" {
-#  compartment_id      = var.tenancy_ocid
+#  compartment_id      = var.ociTenancyOcid
 #  limit_name          = data.oci_limits_limit_definitions.remote_compute_limit_definitions.limit_definitions[0].name
 #  service_name        = data.oci_limits_services.remote_compute_services.services.0.name
 #  availability_domain = data.oci_identity_availability_domains.remote_ADs.availability_domains[count.index].name

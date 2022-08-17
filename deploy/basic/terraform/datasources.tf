@@ -4,12 +4,12 @@
 
 # Gets a list of Availability Domains
 data "oci_identity_availability_domains" "ADs" {
-  compartment_id = var.tenancy_ocid
+  compartment_id = var.ociTenancyOcid
 }
 
 # Gets ObjectStorage namespace
 data "oci_objectstorage_namespace" "user_namespace" {
-  compartment_id = var.compartment_ocid
+  compartment_id = var.ociCompartmentOcid
 }
 
 # Randoms
@@ -52,7 +52,7 @@ resource "random_string" "catalogue_db_password" {
 # Check for resource limits
 ## Check available compute shape
 data "oci_limits_services" "compute_services" {
-  compartment_id = var.tenancy_ocid
+  compartment_id = var.ociTenancyOcid
 
   filter {
     name   = "name"
@@ -60,7 +60,7 @@ data "oci_limits_services" "compute_services" {
   }
 }
 data "oci_limits_limit_definitions" "compute_limit_definitions" {
-  compartment_id = var.tenancy_ocid
+  compartment_id = var.ociTenancyOcid
   service_name   = data.oci_limits_services.compute_services.services.0.name
 
   filter {
@@ -69,7 +69,7 @@ data "oci_limits_limit_definitions" "compute_limit_definitions" {
   }
 }
 data "oci_limits_resource_availability" "compute_resource_availability" {
-  compartment_id      = var.tenancy_ocid
+  compartment_id      = var.ociTenancyOcid
   limit_name          = data.oci_limits_limit_definitions.compute_limit_definitions.limit_definitions[0].name
   service_name        = data.oci_limits_services.compute_services.services.0.name
   availability_domain = data.oci_identity_availability_domains.ADs.availability_domains[count.index].name
@@ -89,7 +89,7 @@ locals {
 
 # Gets a list of supported images based on the shape, operating_system and operating_system_version provided
 data "oci_core_images" "compute_images" {
-  compartment_id           = var.compartment_ocid
+  compartment_id           = var.ociCompartmentOcid
   operating_system         = var.image_operating_system
   operating_system_version = var.image_operating_system_version
   shape                    = local.instance_shape
@@ -98,7 +98,7 @@ data "oci_core_images" "compute_images" {
 }
 
 data "oci_identity_tenancy" "tenant_details" {
-  tenancy_id = var.tenancy_ocid
+  tenancy_id = var.ociTenancyOcid
 
   provider = oci.current_region
 }

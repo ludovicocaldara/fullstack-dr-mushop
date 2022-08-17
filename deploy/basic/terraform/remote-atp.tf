@@ -9,11 +9,11 @@ resource "oci_database_autonomous_database" "remote_mushop_autonomous_database" 
 
   #admin_password           = random_string.autonomous_database_admin_password.result
 
-  compartment_id           = var.compartment_ocid
-  db_name                  = "${var.autonomous_database_name}${random_string.deploy_id.result}"
+  compartment_id           = var.ociCompartmentOcid
+  db_name                  = "${var.autonomous_database_name}${var.resId}"
   source =  "CROSS_REGION_DATAGUARD"
   source_id = oci_database_autonomous_database.mushop_autonomous_database.id
-  display_name             = "${var.autonomous_database_name}-${random_string.deploy_id.result}"
+  display_name             = "${var.autonomous_database_name}-${var.resId}"
   freeform_tags            = local.common_tags
   is_free_tier             = local.autonomous_database_is_free_tier
   license_model            = var.autonomous_database_license_model

@@ -1,7 +1,7 @@
 resource "oci_core_volume_group" "mushuop_volume_group" {
     #Required
     availability_domain = oci_core_instance.app_instance[count.index].availability_domain
-    compartment_id = var.compartment_ocid
+    compartment_id = var.ociCompartmentOcid
     source_details {
         #Required
         type = "volumeIds"

@@ -4,8 +4,8 @@
 
 resource "oci_core_instance" "app_instance" {
   availability_domain                 = random_shuffle.compute_ad.result[count.index % length(random_shuffle.compute_ad.result)]
-  compartment_id                      = var.compartment_ocid
-  display_name                        = "mushop-${random_string.deploy_id.result}-${count.index}"
+  compartment_id                      = var.ociCompartmentOcid
+  display_name                        = "mushop-${var.resId}-${count.index}"
   shape                               = local.instance_shape
   is_pv_encryption_in_transit_enabled = var.is_pv_encryption_in_transit_enabled
   freeform_tags                       = local.common_tags
@@ -28,7 +28,7 @@ resource "oci_core_instance" "app_instance" {
     subnet_id        = oci_core_subnet.mushop_main_subnet.id
     display_name     = "primaryvnic"
     assign_public_ip = (var.instance_visibility == "Private") ? false : true
-    hostname_label   = "mushop-${random_string.deploy_id.result}-${count.index}"
+    hostname_label   = "mushop-${var.resId}-${count.index}"
   }
 
   metadata = {

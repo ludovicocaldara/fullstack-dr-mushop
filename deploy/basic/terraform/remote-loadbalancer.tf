@@ -4,8 +4,8 @@
 
 resource "oci_load_balancer_load_balancer" "remote_mushop_lb" {
   provider = oci.remote_region
-  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.compartment_ocid
-  display_name   = "mushop-${random_string.deploy_id.result}"
+  compartment_id = (var.lb_compartment_ocid != "") ? var.lb_compartment_ocid : var.ociCompartmentOcid
+  display_name   = "mushop-${var.resId}"
   shape          = local.lb_shape
   subnet_ids     = [oci_core_subnet.remote_mushop_lb_subnet.id]
   is_private     = "false"
@@ -22,7 +22,7 @@ resource "oci_load_balancer_load_balancer" "remote_mushop_lb" {
 
 resource "oci_load_balancer_backend_set" "remote_mushop_bes" {
   provider = oci.remote_region
-  name             = "mushop-${random_string.deploy_id.result}"
+  name             = "mushop-${var.resId}"
   load_balancer_id = oci_load_balancer_load_balancer.remote_mushop_lb.id
   policy           = "IP_HASH"
 
@@ -42,7 +42,7 @@ resource "oci_load_balancer_listener" "remote_mushop_listener_80" {
   provider = oci.remote_region
   load_balancer_id         = oci_load_balancer_load_balancer.remote_mushop_lb.id
   default_backend_set_name = oci_load_balancer_backend_set.remote_mushop_bes.name
-  name                     = "mushop-${random_string.deploy_id.result}-80"
+  name                     = "mushop-${var.resId}-80"
   port                     = 80
   protocol                 = "HTTP"
 
@@ -55,7 +55,7 @@ resource "oci_load_balancer_listener" "remote_mushop_listener_443" {
   provider = oci.remote_region
   load_balancer_id         = oci_load_balancer_load_balancer.remote_mushop_lb.id
   default_backend_set_name = oci_load_balancer_backend_set.remote_mushop_bes.name
-  name                     = "mushop-${random_string.deploy_id.result}-443"
+  name                     = "mushop-${var.resId}-443"
   port                     = 443
   protocol                 = "HTTP"
 
