@@ -3,7 +3,8 @@
 # 
 
 resource "oci_core_instance" "app_instance" {
-  availability_domain                 = random_shuffle.compute_ad.result[count.index % length(random_shuffle.compute_ad.result)]
+  # availability_domain                 = random_shuffle.compute_ad.result[count.index % length(random_shuffle.compute_ad.result)]
+  availability_domain                 = data.oci_identity_availability_domains.ADs.availability_domains[0].name
   compartment_id                      = var.ociCompartmentOcid
   display_name                        = "mushop-${var.resId}-${count.index}"
   shape                               = local.instance_shape
@@ -20,7 +21,8 @@ resource "oci_core_instance" "app_instance" {
 
   source_details {
     source_type = "image"
-    source_id   = lookup(data.oci_core_images.compute_images.images[0], "id")
+    #source_id   = lookup(data.oci_core_images.compute_images.images[0], "id")
+    source_id   = "ocid1.image.oc1.iad.aaaaaaaap2omaiail62a6kue72tnggjkwmqzoz4puzqffymdihu4k5fs4mpq"
     kms_key_id  = var.use_encryption_from_oci_vault ? (var.create_new_encryption_key ? oci_kms_key.mushop_key[0].id : var.encryption_key_id) : null
   }
 
