@@ -64,7 +64,7 @@ pkg/
 *.ear
 *.zip
 *.tar.gz
-*.tar.xz
+!*.tar.xz
 *.rar
 
 # Keystores

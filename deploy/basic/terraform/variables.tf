@@ -2,21 +2,27 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
 # 
 
+###############################
+# variables set by LiveLabs
 variable "ociTenancyOcid" {}
-variable "region" {}
 variable "ociCompartmentOcid" {}
+variable "ociUserOcid" {}
+variable "resId" { }
 
-variable "remote_region" {}
 
-variable "ociUserOcid" {
-  default = ""
+###############################
+# Other variables we want to be set
+variable "region" {
+  default = "us-ashburn-1"
 }
-variable "resId" {
-  default = ""
+variable "remote_region" {
+  default = "us-phoenix-1"
 }
+
 variable "fingerprint" {
   default = ""
 }
+
 variable "private_key_path" {
   default = ""
 }
@@ -33,13 +39,13 @@ variable "generate_public_ssh_key" {
   default = true
 }
 variable "instance_shape" {
-  default = "VM.Standard.A1.Flex"
+  default = "VM.Standard.E3.Flex"
 }
 variable "instance_ocpus" {
   default = 1
 }
 variable "instance_shape_config_memory_in_gbs" {
-  default = 6
+  default = 16
 }
 variable "image_operating_system" {
   default = "Oracle Linux"
@@ -62,7 +68,7 @@ variable "lb_shape_details_minimum_bandwidth_in_mbps" {
   default = 10
 }
 variable "lb_shape_details_maximum_bandwidth_in_mbps" {
-  default = 100
+  default = 10
 }
 variable "lb_compartment_ocid" {
   default = ""
@@ -97,7 +103,7 @@ variable "autonomous_database_db_version" {
   default = "19c"
 }
 variable "autonomous_database_license_model" {
-  default = "LICENSE_INCLUDED"
+  default = "BRING_YOUR_OWN_LICENSE"
 }
 variable "autonomous_database_is_free_tier" {
   default = false
@@ -188,7 +194,7 @@ variable "services_in_mock_mode" {
 
 # Always Free only or support other shapes
 variable "use_only_always_free_eligible_resources" {
-  default = true
+  default = false
 }
 ## Always Free Locals
 locals {
