@@ -28,7 +28,7 @@ variable "private_key_path" {
 }
 
 variable "public_ssh_key" {
-  default = ""
+  default = "PUT THE KEY HERE"
 }
 
 # Compute
@@ -36,7 +36,7 @@ variable "num_nodes" {
   default = 2
 }
 variable "generate_public_ssh_key" {
-  default = true
+  default = false
 }
 variable "instance_shape" {
   default = "VM.Standard.E3.Flex"
